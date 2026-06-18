@@ -1,0 +1,126 @@
+{
+  "name": "ExhibitorApplication",
+  "type": "object",
+  "properties": {
+    "companyName": {
+      "type": "string",
+      "description": "Company name"
+    },
+    "regName": {
+      "type": "string",
+      "description": "Registered business name"
+    },
+    "website": {
+      "type": "string"
+    },
+    "industry": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "hq": {
+      "type": "string"
+    },
+    "yearEstablished": {
+      "type": "string"
+    },
+    "repName": {
+      "type": "string",
+      "description": "Representative name"
+    },
+    "repTitle": {
+      "type": "string"
+    },
+    "repEmail": {
+      "type": "string"
+    },
+    "repWhatsapp": {
+      "type": "string"
+    },
+    "repLinkedin": {
+      "type": "string"
+    },
+    "booth": {
+      "type": "string",
+      "enum": [
+        "grade1",
+        "grade2",
+        "grade3",
+        "pavilion"
+      ]
+    },
+    "sponsorInterests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requirements": {
+      "type": "string"
+    },
+    "budget": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "reviewing",
+        "proposal_sent",
+        "confirmed",
+        "declined"
+      ],
+      "default": "new"
+    }
+  },
+  "required": [
+    "companyName",
+    "repName",
+    "repEmail"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.repEmail": "{{user.email}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.repEmail": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

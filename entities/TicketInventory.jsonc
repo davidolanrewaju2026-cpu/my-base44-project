@@ -1,0 +1,41 @@
+{
+  "name": "TicketInventory",
+  "type": "object",
+  "properties": {
+    "ticketType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "premium",
+        "delegate"
+      ],
+      "description": "Ticket tier identifier"
+    },
+    "remaining": {
+      "type": "number",
+      "description": "Remaining ticket count"
+    }
+  },
+  "required": [
+    "ticketType",
+    "remaining"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

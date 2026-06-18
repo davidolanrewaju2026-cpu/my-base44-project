@@ -1,0 +1,99 @@
+{
+  "name": "SponsorRequest",
+  "type": "object",
+  "properties": {
+    "company": {
+      "type": "string",
+      "description": "Company name"
+    },
+    "website": {
+      "type": "string",
+      "description": "Company website"
+    },
+    "name": {
+      "type": "string",
+      "description": "Contact name"
+    },
+    "title": {
+      "type": "string",
+      "description": "Contact title"
+    },
+    "email": {
+      "type": "string",
+      "description": "Contact email"
+    },
+    "whatsapp": {
+      "type": "string",
+      "description": "WhatsApp number"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "headline",
+        "diamond",
+        "platinum",
+        "gold",
+        "silver"
+      ],
+      "description": "Sponsorship tier"
+    },
+    "goals": {
+      "type": "string",
+      "description": "Goals or questions"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "proposal_sent",
+        "closed_won",
+        "closed_lost"
+      ],
+      "default": "new"
+    }
+  },
+  "required": [
+    "company",
+    "name",
+    "email"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.email": "{{user.email}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.email": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
